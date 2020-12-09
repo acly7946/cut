@@ -116,7 +116,7 @@ void usage(char *program_name)
 	"  -b, --bytes=LIST       Select only these bytes\n"
 	"  -c, --characters=LIST  Select only these characters\n"
 	"  -d, --delimiter=DELIM  Character to use as field delimiter\n"
-	"  -f, --fields=LIST	  Select only these fields\n"
+	"  -f, --fields=LIST      Select only these fields\n"
 	"  -h, --help             Display this help message and quit\n"
 	"  -v, --version          Display version number and quit\n";
 
