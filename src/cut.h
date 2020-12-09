@@ -22,6 +22,5 @@ typedef struct
 void cut_bytes(options_t *options);
 void cut_chars(options_t *options);
 void cut_fields(options_t *options);
-char *subString(const char *input, int start, int end);
 
 #endif

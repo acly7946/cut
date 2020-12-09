@@ -37,8 +37,6 @@ int main(int argc, char *argv[])
 		{
 			case 'b':
 				options.mode += 'b';
-				options.bytes.start = 3;
-				options.bytes.end = 5;
 				break;
 
 			case 'c':
