@@ -16,9 +16,11 @@ Working on Arch Linux using:
 
 ### Compiling
 ```
-git clone <this URL>
-cd <directory>
+git clone https://github.com/acly7946/cut.git
+cd cut
 make
 # To install
 sudo make install
+# To uninstall
+sudo make uninstall
 ```
