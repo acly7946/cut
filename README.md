@@ -3,6 +3,9 @@
 This is my re-implementation of cut
 It's just for educational/fun purposes
 
+## Usage
+man cut
+
 ## Building from source
 Working on Arch Linux using:
 * gcc 10.2.0
