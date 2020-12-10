@@ -128,7 +128,7 @@ void usage(char *program_name)
 	exit(EXIT_FAILURE);
 }
 
-//void parseList(char *input, int *start, int *end)
-//{
-//
-//}
+void parseList(char *input, int *start, int *end)
+{
+
+}
