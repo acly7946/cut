@@ -3,14 +3,16 @@
 This is my re-implementation of the ```cut``` command line utility.
 
 ## Usage
+```
 cut <OPTIONS> [FILE]
 
-  -b, --bytes=LIST       Select only these bytes\n
-  -c, --characters=LIST  Select only these characters\n
-  -d, --delimiter=DELIM  Character to use as field delimiter\n
-  -f, --fields=LIST      Select only these fields\n
-  -h, --help             Display this help message and quit\n
-  -v, --version          Display version number and quit\n
+  -b, --bytes=LIST       Select only these bytes
+  -c, --characters=LIST  Select only these characters
+  -d, --delimiter=DELIM  Character to use as field delimiter
+  -f, --fields=LIST      Select only these fields
+  -h, --help             Display this help message and quit
+  -v, --version          Display version number and quit
+```
 
 ## Building from source
 Working on Arch Linux using:
