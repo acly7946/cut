@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define OPTSTR "b:c:d:f:hv"
-#define VERSION "cut version NULL (Mon 7 Dec)\n"
+#define VERSION "cut version (Mon 10 Dec)\n"
 
 void usage(char *program_name);
 void parseList(char *input, int *start, int *end);
