@@ -1,9 +1,7 @@
 #include "cut.h"
-#include <ctype.h>
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
