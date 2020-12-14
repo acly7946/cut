@@ -7,7 +7,7 @@ OBJECTS = $(SOURCES:%.c=%.o)
 MAKEFLAGS +="-j $(shell nproc)"
 
 # Compiler
-COMPILER = ccache gcc
+COMPILER = gcc
 OPTIMIZATION = -O2
 WARNINGS = -Wall -Wextra
 CFLAGS = $(OPTIMIZATION) $(WARNINGS) -pipe -g
@@ -22,16 +22,15 @@ all: $(OBJECTS)
 	@$(LINKER) -o $(TARGET) $? $(LINKERFLAGS)
 	@printf "$(clr_grn_gry)DONE\n$(clr_non)"
 
-$(OBJECTS):
+$(OBJECTS): $(SOURCES)
 	@printf "$(clr_grn)Compiling$(clr_gry) $(*F).c$(clr_non)\n"
-	@$(COMPILER) -c $*.c $(CFLAGS) $(GTKLIB) -o $@
+	@$(COMPILER) -c $*.c $(CFLAGS) -o $@
 
 clean:
-	rm -f $(SOURCEDIR)/*.o $(TARGET)
+	@rm -f $(OBJECTS) $(TARGET)
 
-clear:
-	rm -f $(SOURCEDIR)/*.o $(TARGET)
-	clear
+fresh: clean
+	@$(MAKE)
 
 install:
 	@echo TODO
@@ -39,7 +38,7 @@ install:
 uninstall:
 	@echo TODO
 
-.PHONY: all clean clear install uninstall
+.PHONY: all clean fresh install uninstall
 
 # Colors
 clr_grn = \033[0;32m

@@ -1,7 +1,9 @@
 #include "cut.h"
+#include <ctype.h>
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +12,7 @@
 #define VERSION "cut version (Mon 10 Dec)\n"
 
 void usage(char *program_name);
-void parseList(char *input, int *start, int *end);
+void parse_list(char *input, int *start, int *end);
 
 int main(int argc, char *argv[])
 {
@@ -37,6 +39,8 @@ int main(int argc, char *argv[])
 		{
 			case 'b':
 				options.mode += 'b';
+				//options.bytes.start = 2;
+				//options.bytes.end = 5;
 				break;
 
 			case 'c':
@@ -128,7 +132,6 @@ void usage(char *program_name)
 	exit(EXIT_FAILURE);
 }
 
-void parseList(char *input, int *start, int *end)
+void parse_list(char *input, int *start, int *end)
 {
-
 }
