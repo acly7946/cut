@@ -20,7 +20,6 @@ LINKERFLAGS =
 all: $(OBJECTS)
 	@printf "$(clr_grn)Linking$(clr_gry) $(?F) -> $(TARGET)$(clr_non)\n"
 	@$(LINKER) -o $(TARGET) $? $(LINKERFLAGS)
-	@printf "$(clr_grn_gry)DONE\n$(clr_non)"
 
 $(OBJECTS): $(SOURCES)
 	@printf "$(clr_grn)Compiling$(clr_gry) $(*F).c$(clr_non)\n"
