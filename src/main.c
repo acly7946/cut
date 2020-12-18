@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 
 			case 'f':
 				options.mode += 'f';
+				parse_list(optarg, &options.fields.start, &options.fields.end);
 				break;
 
 			case 'd':
