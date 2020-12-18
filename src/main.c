@@ -2,12 +2,13 @@
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
+#include <limits.h> // CHAR_MAX for long only opts
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define OPTSTR "b:c:d:f:hv"
-#define VERSION "cut version (Mon 10 Dec)\n"
+#define VERSION "cut (Fri 18 Dec)\n"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
@@ -37,12 +38,12 @@ int main(int argc, char *argv[])
 		{
 			case 'b':
 				options.mode += 'b';
-				//options.bytes.start = 2;
-				//options.bytes.end = 5;
+				parse_list(optarg, &options.bytes.start, &options.bytes.end);
 				break;
 
 			case 'c':
 				options.mode += 'c';
+				parse_list(optarg, &options.chars.start, &options.chars.end);
 				break;
 
 			case 'f':
@@ -132,4 +133,8 @@ void usage(char *program_name)
 
 void parse_list(char *input, int *start, int *end)
 {
+	if(!(sscanf(input, "%d-%d", start, end)))
+	{
+		printf("Blahblah errors TODO");
+	}
 }
