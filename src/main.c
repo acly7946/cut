@@ -2,21 +2,22 @@
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
-#include <limits.h> // CHAR_MAX for long only opts
+//#include <limits.h> // CHAR_MAX for long only opts
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#define PROG_NAME "cut"
 #define OPTSTR "b:c:d:f:hv"
-#define VERSION "cut (Fri 18 Dec)\n"
+#define VERSION PROG_NAME" (Fri 18 Dec)\n"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
 
 int main(int argc, char *argv[])
 {
-	int opt;
-	options_t options =
+	int optc;
+	opt_t opt =
 	{
 		.delimiter='\t',
 		.input=stdin,
@@ -32,23 +33,23 @@ int main(int argc, char *argv[])
 	};
 
 	// Option parsing
-	while((opt = getopt_long(argc, argv, OPTSTR, long_options, NULL)) != EOF)
+	while((optc = getopt_long(argc, argv, OPTSTR, long_options, NULL)) != EOF)
 	{
-		switch(opt)
+		switch(optc)
 		{
 			case 'b':
-				options.mode += 'b';
-				parse_list(optarg, &options.bytes.start, &options.bytes.end);
+				opt.mode += 'b';
+				parse_list(optarg, &opt.bytes.start, &opt.bytes.end);
 				break;
 
 			case 'c':
-				options.mode += 'c';
-				parse_list(optarg, &options.chars.start, &options.chars.end);
+				opt.mode += 'c';
+				parse_list(optarg, &opt.chars.start, &opt.chars.end);
 				break;
 
 			case 'f':
-				options.mode += 'f';
-				parse_list(optarg, &options.fields.start, &options.fields.end);
+				opt.mode += 'f';
+				parse_list(optarg, &opt.fields.start, &opt.fields.end);
 				break;
 
 			case 'd':
@@ -57,7 +58,7 @@ int main(int argc, char *argv[])
 					fprintf(stderr, "%s: delimiter must be a single character\n", basename(argv[0]));
 					return EXIT_FAILURE;
 				}
-				sscanf(optarg, "%c", &options.delimiter);
+				sscanf(optarg, "%c", &opt.delimiter);
 				break;
 
 			case 'v':
@@ -72,13 +73,13 @@ int main(int argc, char *argv[])
 	}
 
 	// Error checking
-	if(!options.mode) // no mode specified
+	if(!opt.mode) // no mode specified
 	{
 		fprintf(stderr, "%s: specify bytes, characters or fields\n", basename(argv[0]));
 		return EXIT_FAILURE;
 	}
 
-	if(!(options.mode == 'b' || options.mode =='c' || options.mode == 'f')) // multiple mode specified
+	if(!(opt.mode == 'b' || opt.mode =='c' || opt.mode == 'f')) // multiple mode specified
 	{
 		fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
 		return EXIT_FAILURE;
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
 
 	if(optind < argc) // filename
 	{
-		if(!(options.input = fopen(argv[optind++], "r")))
+		if(!(opt.input = fopen(argv[optind++], "r")))
 		{
 			fprintf(stderr, "%s: cannot access '%s': ", basename(argv[0]), argv[--optind]);
 			perror(NULL);
@@ -94,18 +95,18 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	switch(options.mode)
+	switch(opt.mode)
 	{
 		case 'b':
-			cut_bytes(&options);
+			cut_bytes(&opt);
 			break;
 		
 		case 'c':
-			cut_chars(&options);
+			cut_chars(&opt);
 			break;
 		
 		case 'f':
-			cut_fields(&options);
+			cut_fields(&opt);
 			break;
 	}
 
@@ -134,7 +135,16 @@ void usage(char *program_name)
 
 void parse_list(char *input, int *start, int *end)
 {
-	if(!(sscanf(input, "%d-%d", start, end)))
+	if(input[0] == '-') // input is -M
+	{
+		if(!(sscanf(input, "%d", end)))
+		{
+			printf("Blahblah errors TODO");
+		}
+		*start = 1;
+		*end = abs(*end);
+	}
+	else if(!(sscanf(input, "%d-%d", start, end)))
 	{
 		printf("Blahblah errors TODO");
 	}

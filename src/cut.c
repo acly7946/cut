@@ -3,23 +3,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-void cut_bytes(options_t *options)
+void cut_bytes(opt_t *opt)
+{
+	char *line;
+	char *substring;
+	size_t len = 0;
+	ssize_t read;
+	while((read = getline(&line, &len, opt -> input)) != EOF)
+	{
+		//strncpy(substring, line, )
+		printf("%.*s", (opt -> bytes.end - opt -> bytes.start + 1), line + opt -> bytes.start - 1);
+	}
+}
+
+void cut_chars(opt_t *opt)
 {
 	char *line;
 	size_t len = 0;
 	ssize_t read;
-	while((read = getline(&line, &len, options -> input)) != EOF)
+	while((read = getline(&line, &len, opt -> input)) != EOF)
 	{
-		printf("%.*s\n", (options -> bytes.end - options -> bytes.start + 1), line + options -> bytes.start - 1);
 	}
 }
 
-void cut_chars(options_t *options)
+void cut_fields(opt_t *opt)
 {
-	return;
-}
-
-void cut_fields(options_t *options)
-{
-	return;
+	char *line;
+	size_t len = 0;
+	ssize_t read;
+	while((read = getline(&line, &len, opt -> input)) != EOF)
+	{
+	}
 }

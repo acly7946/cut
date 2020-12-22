@@ -17,10 +17,10 @@ typedef struct
 	char delimiter;
 	char mode;
 	FILE *input;
-}	options_t;
+}	opt_t;
 
-void cut_bytes(options_t *options);
-void cut_chars(options_t *options);
-void cut_fields(options_t *options);
+void cut_bytes(opt_t *opt);
+void cut_chars(opt_t *opt);
+void cut_fields(opt_t *opt);
 
 #endif
