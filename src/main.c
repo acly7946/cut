@@ -7,9 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define PROG_NAME "cut"
-#define OPTSTR "b:c:d:f:hv"
-#define VERSION PROG_NAME" (Fri 18 Dec)\n"
+#define VERSION "Tue 22 dec"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
@@ -78,7 +76,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'v':
-				printf(VERSION);
+				printf("%s (%s)\n", basename(argv[0]), VERSION);
 				return EXIT_SUCCESS;
 
 			case 'h':
@@ -135,13 +133,13 @@ void parse_list(char *input, int *start, int *end)
 	{
 		if(!(sscanf(input, "%d", end)))
 		{
-			printf("Blahblah errors TODO");
+			printf("ERROR\n");
 		}
 		*start = 1;
 		*end = abs(*end);
 	}
 	else if(!(sscanf(input, "%d-%d", start, end)))
 	{
-		printf("Blahblah errors TODO");
+		printf("ERROR\n");
 	}
 }
