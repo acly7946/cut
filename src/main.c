@@ -17,6 +17,7 @@ void parse_list(char *input, int *start, int *end);
 int main(int argc, char *argv[])
 {
 	int optc;
+	void (*cut_mode)(opt_t *);
 	opt_t opt =
 	{
 		.delimiter='\t',
@@ -33,22 +34,37 @@ int main(int argc, char *argv[])
 	};
 
 	// Option parsing
-	while((optc = getopt_long(argc, argv, OPTSTR, long_options, NULL)) != EOF)
+	while((optc = getopt_long(argc, argv, "b:c:d:f:hv", long_options, NULL)) != EOF)
 	{
 		switch(optc)
 		{
 			case 'b':
-				opt.mode += 'b';
+				if(cut_mode)
+				{
+					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					return EXIT_FAILURE;
+				}
+				cut_mode = &cut_bytes;
 				parse_list(optarg, &opt.bytes.start, &opt.bytes.end);
 				break;
 
 			case 'c':
-				opt.mode += 'c';
+				if(cut_mode)
+				{
+					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					return EXIT_FAILURE;
+				}
+				cut_mode = &cut_chars;
 				parse_list(optarg, &opt.chars.start, &opt.chars.end);
 				break;
 
 			case 'f':
-				opt.mode += 'f';
+				if(cut_mode)
+				{
+					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					return EXIT_FAILURE;
+				}
+				cut_mode = &cut_fields;
 				parse_list(optarg, &opt.fields.start, &opt.fields.end);
 				break;
 
@@ -72,16 +88,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// Error checking
-	if(!opt.mode) // no mode specified
+	if(!cut_mode)
 	{
 		fprintf(stderr, "%s: specify bytes, characters or fields\n", basename(argv[0]));
-		return EXIT_FAILURE;
-	}
-
-	if(!(opt.mode == 'b' || opt.mode =='c' || opt.mode == 'f')) // multiple mode specified
-	{
-		fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
 		return EXIT_FAILURE;
 	}
 
@@ -95,20 +104,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	switch(opt.mode)
-	{
-		case 'b':
-			cut_bytes(&opt);
-			break;
-		
-		case 'c':
-			cut_chars(&opt);
-			break;
-		
-		case 'f':
-			cut_fields(&opt);
-			break;
-	}
+	cut_mode(&opt);
 
 	return EXIT_SUCCESS;
 }

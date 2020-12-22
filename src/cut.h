@@ -15,7 +15,6 @@ typedef struct
 	list_t chars;
 	list_t fields;
 	char delimiter;
-	char mode;
 	FILE *input;
 }	opt_t;
 
