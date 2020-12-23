@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define VERSION "Tue 22 dec"
+#define VERSION "Wed 23 dec"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_bytes;
-				parse_list(optarg, &opt.bytes.start, &opt.bytes.end);
+				parse_list(optarg, &opt.start, &opt.end);
 				break;
 
 			case 'c':
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_chars;
-				parse_list(optarg, &opt.chars.start, &opt.chars.end);
+				parse_list(optarg, &opt.start, &opt.end);
 				break;
 
 			case 'f':
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_fields;
-				parse_list(optarg, &opt.fields.start, &opt.fields.end);
+				parse_list(optarg, &opt.start, &opt.end);
 				break;
 
 			case 'd':

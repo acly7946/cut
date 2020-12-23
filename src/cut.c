@@ -14,7 +14,7 @@ void cut_bytes(opt_t *opt)
 	while((read = getline(&line, &len, opt -> input)) != EOF)
 	{
 		//strncpy(substring, line, )
-		printf("%.*s", (opt -> bytes.end - opt -> bytes.start + 1), line + opt -> bytes.start - 1);
+		printf("%.*s", (opt -> end - opt -> start + 1), line + opt -> start - 1);
 	}
 }
 
@@ -27,7 +27,7 @@ void cut_chars(opt_t *opt)
 	while((read = getline(&line, &len, opt -> input)) != EOF)
 	{
 		//strncpy(substring, line, )
-		printf("%.*s", (opt -> bytes.end - opt -> bytes.start + 1), line + opt -> bytes.start - 1);
+		printf("%.*s", (opt -> end - opt -> start + 1), line + opt -> start - 1);
 	}
 }
 

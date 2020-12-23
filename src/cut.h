@@ -7,13 +7,6 @@ typedef struct
 {
 	int start;
 	int end;
-}	list_t;
-
-typedef struct
-{
-	list_t bytes;
-	list_t chars;
-	list_t fields;
 	char delimiter;
 	FILE *input;
 }	opt_t;
