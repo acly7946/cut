@@ -12,9 +12,12 @@ void cut_bytes(opt_t *opt)
 	int start = opt -> start;
 	int end = opt -> end;
 	FILE *input = opt -> input;
+
+	char buffer[BUFSIZ];
+	setvbuf(stdout, buffer, _IOFBF, BUFSIZ);
 	while(getline(&line, &len, input) != EOF)
 	{
-		printf("%.*s\n", (end - start + 1), line + start - 1);
+		printf("%.*s\n", (end - start + 1), (line + start - 1));
 	}
 
 	free(line);
@@ -22,7 +25,7 @@ void cut_bytes(opt_t *opt)
 
 void cut_chars(opt_t *opt)
 {
-	cut_bytes(opt);
+	cut_bytes(opt); // TODO: seperate -b -c
 }
 
 void cut_fields(opt_t *opt)
