@@ -123,7 +123,7 @@ void usage(char *program_name)
 	"  -h, --help             Display this help message and quit\n"
 	"  -v, --version          Display version number and quit\n";
 
-	char *usage = malloc(strlen("Usage: ") + strlen(program_name) + strlen(" OPTIONS [FILE]\n") + strlen(usage_format) + 1);
+	char *usage = malloc(strlen("Usage: ") + strlen(program_name) + strlen(" <OPTIONS> [FILE]\n") + strlen(usage_format) + 1);
 	sprintf(usage, "Usage: %s <OPTIONS> [FILE]\n%s", program_name, usage_format);
 
 	printf("%s", usage);

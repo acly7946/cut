@@ -8,27 +8,21 @@
 void cut_bytes(opt_t *opt)
 {
 	char *line;
-	//char *substring;
 	size_t len = 0;
-	ssize_t read;
-	while((read = getline(&line, &len, opt -> input)) != EOF)
+	int start = opt -> start;
+	int end = opt -> end;
+	FILE *input = opt -> input;
+	while(getline(&line, &len, input) != EOF)
 	{
-		//strncpy(substring, line, )
-		printf("%.*s", (opt -> end - opt -> start + 1), line + opt -> start - 1);
+		printf("%.*s\n", (end - start + 1), line + start - 1);
 	}
+
+	free(line);
 }
 
 void cut_chars(opt_t *opt)
 {
-	char *line;
-	//char *substring;
-	size_t len = 0;
-	ssize_t read;
-	while((read = getline(&line, &len, opt -> input)) != EOF)
-	{
-		//strncpy(substring, line, )
-		printf("%.*s", (opt -> end - opt -> start + 1), line + opt -> start - 1);
-	}
+	cut_bytes(opt);
 }
 
 void cut_fields(opt_t *opt)
