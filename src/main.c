@@ -15,7 +15,7 @@ void parse_list(char *input, int *start, int *end);
 int main(int argc, char *argv[])
 {
 	int optc;
-	void (*cut_mode)(opt_t *);
+	void (*cut_mode)(opt_t *) = NULL;
 	opt_t opt =
 	{
 		.delimiter='\t',
@@ -94,15 +94,19 @@ int main(int argc, char *argv[])
 
 	if(optind < argc) // filename
 	{
-		if(!(opt.input = fopen(argv[optind++], "r")))
+		if(strcmp(argv[optind], "-") == 0)
 		{
-			fprintf(stderr, "%s: cannot access '%s': ", basename(argv[0]), argv[--optind]);
+		}
+		else if(!(opt.input = fopen(argv[optind], "r")))
+		{
+			fprintf(stderr, "%s: cannot access '%s': ", basename(argv[0]), argv[optind]);
 			perror(NULL);
 			return EXIT_FAILURE;
 		}
 	}
 
 	cut_mode(&opt);
+	fclose(opt.input);
 
 	return EXIT_SUCCESS;
 }
