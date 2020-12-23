@@ -13,8 +13,7 @@ void cut_bytes(opt_t *opt)
 	int end = opt -> end;
 	FILE *input = opt -> input;
 
-	char buffer[BUFSIZ];
-	setvbuf(stdout, buffer, _IOFBF, BUFSIZ);
+	setvbuf(stdout, NULL, _IOFBF, BUFSIZ);
 	while(getline(&line, &len, input) != EOF)
 	{
 		printf("%.*s\n", (end - start + 1), (line + start - 1));
