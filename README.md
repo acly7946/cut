@@ -13,6 +13,7 @@ cut <OPTIONS> [FILE]
   -h, --help             Display this help message and quit
   -v, --version          Display version number and quit
 ```
+Bytes and characters operate the same (as characters) for now.
 
 ## Building from source
 Working on Arch Linux using:

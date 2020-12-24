@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
@@ -13,10 +14,17 @@ void cut_bytes(opt_t *opt)
 	int end = opt -> end;
 	FILE *input = opt -> input;
 
-	setvbuf(stdout, NULL, _IOFBF, BUFSIZ);
+	setvbuf(stdout, NULL, _IOFBF, sysconf(_SC_PAGESIZE));
 	while(getline(&line, &len, input) != EOF)
 	{
-		printf("%.*s\n", (end - start + 1), (line + start - 1));
+		if(strlen(line) == 1)
+		{
+			printf("\n");
+		}
+		else
+		{
+			printf("%.*s\n", (end - start + 1), (line + start - 1));
+		}
 	}
 
 	free(line);
