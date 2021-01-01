@@ -8,26 +8,27 @@
 
 void cut_bytes(opt_t *opt)
 {
-	char *line;
-	size_t len = 0;
+	char c;
+	int col = 0;
 	int start = opt -> start;
 	int end = opt -> end;
 	FILE *input = opt -> input;
-
+	
 	setvbuf(stdout, NULL, _IOFBF, sysconf(_SC_PAGESIZE));
-	while(getline(&line, &len, input) != EOF)
+
+	while((c = getc(input)) != EOF)
 	{
-		if(strlen(line) == 1)
+		col++;
+		if(c == '\n')
 		{
-			printf("\n");
+			putchar(c);
+			col = 0;
 		}
-		else
+		if((col >= start) && (col <= end))
 		{
-			printf("%.*s\n", (end - start + 1), (line + start - 1));
+			putchar(c);
 		}
 	}
-
-	free(line);
 }
 
 void cut_chars(opt_t *opt)
