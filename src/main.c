@@ -115,13 +115,19 @@ void usage(char *program_name)
 {
 	char *usage_format =
 	"\n"
-	"Options: \n"
+	"Options:\n"
 	"  -b, --bytes=LIST       Select only these bytes\n"
 	"  -c, --characters=LIST  Select only these characters\n"
 	"  -d, --delimiter=DELIM  Character to use as field delimiter\n"
 	"  -f, --fields=LIST      Select only these fields\n"
 	"  -h, --help             Display this help message and quit\n"
-	"  -v, --version          Display version number and quit\n";
+	"  -V, --version          Display version number and quit\n"
+	"\n"
+	"Lists:\n"
+	"  N    Select N only\n"
+	"  N-   Select N to end\n"
+	"  N-M  Select N to M\n"
+	"   -M  Select 1 to M\n";
 
 	char *usage = malloc(strlen("Usage: ") + strlen(program_name) + strlen(" <OPTIONS> [FILE]\n") + strlen(usage_format) + 1);
 	sprintf(usage, "Usage: %s <OPTIONS> [FILE]\n%s", program_name, usage_format);
