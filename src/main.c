@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define VERSION "Wed 23 dec"
+#define VERSION "Fri 1 Jan"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
@@ -28,11 +28,11 @@ int main(int argc, char *argv[])
 		{"delimiter", required_argument, NULL, 'd'},
 		{"fields", required_argument, NULL, 'f'},
 		{"help", no_argument, NULL, 'h'},
-		{"version", no_argument, NULL, 'v'},
+		{"version", no_argument, NULL, 'V'},
 	};
 
 	// Option parsing
-	while((optc = getopt_long(argc, argv, "b:c:d:f:hv", long_options, NULL)) != EOF)
+	while((optc = getopt_long(argc, argv, "b:c:d:f:hV", long_options, NULL)) != EOF)
 	{
 		switch(optc)
 		{
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 				sscanf(optarg, "%c", &opt.delimiter);
 				break;
 
-			case 'v':
+			case 'V':
 				printf("%s (%s)\n", basename(argv[0]), VERSION);
 				return EXIT_SUCCESS;
 
