@@ -2,10 +2,11 @@
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
-//#include <limits.h> // CHAR_MAX for long only opts
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define VERSION "Fri 1 Jan"
 
@@ -139,7 +140,7 @@ void usage(char *program_name)
 
 void parse_list(char *input, int *start, int *end)
 {
-	if(input[0] == '-') // input is -M
+	if(input[0] == '-') // -M
 	{
 		if(!(sscanf(input, "%d", end)))
 		{
@@ -148,7 +149,15 @@ void parse_list(char *input, int *start, int *end)
 		*start = 1;
 		*end = abs(*end);
 	}
-	else if(!(sscanf(input, "%d-%d", start, end)))
+	else if(input[strlen(input) - 1] == '-') // N-
+	{
+		if(!(sscanf(input, "%d", start)))
+		{
+			printf("ERROR\n");
+		}
+		*end = INT_MAX; // good enough
+	}
+	else if(!(sscanf(input, "%d-%d", start, end))) // N-M
 	{
 		printf("ERROR\n");
 	}

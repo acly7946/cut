@@ -1,6 +1,5 @@
 #include "cut.h"
 #include <stdio.h>
-#include <unistd.h>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
@@ -12,8 +11,6 @@ void cut_bytes(opt_t *opt)
 	int end = opt -> end;
 	FILE *input = opt -> input;
 	
-	setvbuf(stdout, NULL, _IOFBF, sysconf(_SC_PAGESIZE));
-
 	while((c = getc(input)) != EOF)
 	{
 		col++;
