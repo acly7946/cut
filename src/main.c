@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 #define VERSION "Fri 1 Jan"
+#define AUTHOR "acly7946"
 
 void usage(char *program_name);
 void parse_list(char *input, int *start, int *end);
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'V':
-				printf("%s (%s)\n", basename(argv[0]), VERSION);
+				printf("%s, %s, %s\n", basename(argv[0]), VERSION, AUTHOR);
 				return EXIT_SUCCESS;
 
 			case 'h':
@@ -144,7 +145,7 @@ void parse_list(char *input, int *start, int *end)
 	{
 		if(!(sscanf(input, "%d", end)))
 		{
-			printf("ERROR\n");
+			printf("ERROR1\n");
 		}
 		*start = 1;
 		*end = abs(*end);
@@ -153,12 +154,22 @@ void parse_list(char *input, int *start, int *end)
 	{
 		if(!(sscanf(input, "%d", start)))
 		{
-			printf("ERROR\n");
+			printf("ERROR2\n");
 		}
 		*end = INT_MAX; // good enough
 	}
 	else if(!(sscanf(input, "%d-%d", start, end))) // N-M
 	{
-		printf("ERROR\n");
+		printf("ERROR3\n");
+	}
+
+	if(*start == 0)
+	{
+		printf("ERROR4\n");
+
+	}
+	if(*end == 0)
+	{
+		printf("ERROR5\n");
 	}
 }
