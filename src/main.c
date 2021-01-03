@@ -115,8 +115,8 @@ int main(int argc, char *argv[])
 
 void usage(char *program_name)
 {
-	printf("Usage: %s <OPTIONS> [FILE]\n", program_name);
-	char *usage_format =
+	fprintf(stderr,
+	"Usage: %s <OPTIONS> [FILE]\n"
 	"\n"
 	"Options:\n"
 	"  -b, --bytes=LIST       Select only these bytes\n"
@@ -130,8 +130,8 @@ void usage(char *program_name)
 	"  N    Select N only\n"
 	"  N-   Select N to end\n"
 	"  N-M  Select N to M\n"
-	"   -M  Select 1 to M\n";
-	printf("%s", usage_format);
+	"   -M  Select 1 to M\n"
+	, program_name);
 	exit(EXIT_FAILURE);
 }
 
