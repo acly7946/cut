@@ -158,14 +158,4 @@ void parse_list(char *input, int *start, int *end)
 	{
 		printf("ERROR3\n");
 	}
-
-	if(*start == 0)
-	{
-		printf("ERROR4\n");
-
-	}
-	if(*end == 0)
-	{
-		printf("ERROR5\n");
-	}
 }

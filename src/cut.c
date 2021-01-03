@@ -1,25 +1,23 @@
 #include "cut.h"
 #include <stdio.h>
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 void cut_bytes(opt_t *opt)
 {
 	char c;
-	int col = 0;
+	int column = 0;
 	int start = opt -> start;
 	int end = opt -> end;
 	FILE *input = opt -> input;
 	
 	while((c = getc(input)) != EOF)
 	{
-		col++;
+		column++;
 		if(c == '\n')
 		{
 			putchar(c);
-			col = 0;
+			column = 0;
 		}
-		if((col >= start) && (col <= end))
+		if((column >= start) && (column <= end))
 		{
 			putchar(c);
 		}
