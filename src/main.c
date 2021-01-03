@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
 
 void usage(char *program_name)
 {
+	printf("Usage: %s <OPTIONS> [FILE]\n", program_name);
 	char *usage_format =
 	"\n"
 	"Options:\n"
@@ -130,12 +131,7 @@ void usage(char *program_name)
 	"  N-   Select N to end\n"
 	"  N-M  Select N to M\n"
 	"   -M  Select 1 to M\n";
-
-	char *usage = malloc(strlen("Usage: ") + strlen(program_name) + strlen(" <OPTIONS> [FILE]\n") + strlen(usage_format) + 1);
-	sprintf(usage, "Usage: %s <OPTIONS> [FILE]\n%s", program_name, usage_format);
-
-	printf("%s", usage);
-	free(usage);
+	printf("%s", usage_format);
 	exit(EXIT_FAILURE);
 }
 
