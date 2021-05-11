@@ -3,8 +3,15 @@
 
 #include <stdio.h>
 
+//typedef struct
+//{
+//	int start;
+//	int end;
+//}	list_t
+
 typedef struct
 {
+	//list_t lists;
 	int start;
 	int end;
 	char delimiter;

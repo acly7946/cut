@@ -7,13 +7,13 @@ OBJECTS = $(SOURCES:%.c=%.o)
 MAKEFLAGS +="-j $(shell nproc)"
 
 # Compiler
-COMPILER = gcc
+COMPILER = cc
 OPTIMIZATION = -O2
 WARNINGS = -Wall -Wextra
 CFLAGS = $(OPTIMIZATION) $(WARNINGS) -pipe -g
 
 # Linker
-LINKER = gcc
+LINKER = cc
 LINKERFLAGS =
 
 # Targets
@@ -43,4 +43,3 @@ uninstall:
 clr_grn = \033[0;32m
 clr_gry = \033[2;37m
 clr_non = \033[0;m
-clr_grn_gry = \033[1;30;42m

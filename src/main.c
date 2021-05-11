@@ -1,4 +1,3 @@
-#include "cut.h"
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
@@ -7,12 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "cut.h"
 
-#define VERSION "Fri 1 Jan"
+#define PROGRAM "cut"
+#define VERSION "Tue 11 May"
 #define AUTHOR "acly7946"
 
-void usage(char *program_name);
-void parse_list(char *input, int *start, int *end);
+static void usage();
+static void parse_list(char *input, int *start, int *end);
 
 int main(int argc, char *argv[])
 {
@@ -20,10 +21,10 @@ int main(int argc, char *argv[])
 	void (*cut_mode)(opt_t *) = NULL;
 	opt_t opt =
 	{
-		.delimiter='\t',
-		.input=stdin,
+		.delimiter = '\t',
+		.input = stdin,
 	};
-	static struct option long_options[] =
+	static struct option long_opt[] =
 	{
 		{"bytes", required_argument, NULL, 'b'},
 		{"characters", required_argument, NULL, 'c'},
@@ -33,15 +34,14 @@ int main(int argc, char *argv[])
 		{"version", no_argument, NULL, 'V'},
 	};
 
-	// Option parsing
-	while((optc = getopt_long(argc, argv, "b:c:d:f:hV", long_options, NULL)) != EOF)
+	while((optc = getopt_long(argc, argv, "b:c:d:f:hV", long_opt, NULL)) != EOF)
 	{
 		switch(optc)
 		{
 			case 'b':
 				if(cut_mode)
 				{
-					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					fprintf(stderr, "%s: only one type of list may be specified\n", PROGRAM);
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_bytes;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			case 'c':
 				if(cut_mode)
 				{
-					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					fprintf(stderr, "%s: only one type of list may be specified\n", PROGRAM);
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_chars;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 			case 'f':
 				if(cut_mode)
 				{
-					fprintf(stderr, "%s: only one type of list may be specified\n", basename(argv[0]));
+					fprintf(stderr, "%s: only one type of list may be specified\n", PROGRAM);
 					return EXIT_FAILURE;
 				}
 				cut_mode = &cut_fields;
@@ -71,26 +71,25 @@ int main(int argc, char *argv[])
 			case 'd':
 				if(strlen(optarg) > 1)
 				{
-					fprintf(stderr, "%s: delimiter must be a single character\n", basename(argv[0]));
+					fprintf(stderr, "%s: delimiter must be a single character\n", PROGRAM);
 					return EXIT_FAILURE;
 				}
 				sscanf(optarg, "%c", &opt.delimiter);
 				break;
 
 			case 'V':
-				printf("%s, %s, %s\n", basename(argv[0]), VERSION, AUTHOR);
+				printf("%s, %s, %s\n", PROGRAM, VERSION, AUTHOR);
 				return EXIT_SUCCESS;
 
-			case 'h':
 			default:
-				usage(basename(argv[0]));
+				usage();
 				break;
 		}
 	}
 
 	if(!cut_mode)
 	{
-		fprintf(stderr, "%s: specify bytes, characters or fields\n", basename(argv[0]));
+		fprintf(stderr, "%s: specify bytes, characters or fields\n", PROGRAM);
 		return EXIT_FAILURE;
 	}
 
@@ -101,7 +100,7 @@ int main(int argc, char *argv[])
 		}
 		else if(!(opt.input = fopen(argv[optind], "r")))
 		{
-			fprintf(stderr, "%s: cannot access '%s': ", basename(argv[0]), argv[optind]);
+			fprintf(stderr, "%s: cannot access '%s': ", PROGRAM, argv[optind]);
 			perror(NULL);
 			return EXIT_FAILURE;
 		}
@@ -113,7 +112,7 @@ int main(int argc, char *argv[])
 	return EXIT_SUCCESS;
 }
 
-void usage(char *program_name)
+static void usage()
 {
 	fprintf(stderr,
 	"Usage: %s <OPTIONS> [FILE]\n"
@@ -131,17 +130,18 @@ void usage(char *program_name)
 	"  N-   Select N to end\n"
 	"  N-M  Select N to M\n"
 	"   -M  Select 1 to M\n"
-	, program_name);
+	, PROGRAM);
 	exit(EXIT_FAILURE);
 }
 
-void parse_list(char *input, int *start, int *end)
+static void parse_list(char *input, int *start, int *end)
 {
 	if(input[0] == '-') // -M
 	{
 		if(!(sscanf(input, "%d", end)))
 		{
-			printf("ERROR1\n");
+			fprintf(stderr, "%s: List must be numeric\n", PROGRAM);
+			exit(EXIT_FAILURE);
 		}
 		*start = 1;
 		*end = abs(*end);
@@ -150,12 +150,23 @@ void parse_list(char *input, int *start, int *end)
 	{
 		if(!(sscanf(input, "%d", start)))
 		{
-			printf("ERROR2\n");
+			fprintf(stderr, "%s: List must be numeric\n", PROGRAM);
+			exit(EXIT_FAILURE);
 		}
 		*end = INT_MAX; // good enough
 	}
 	else if(!(sscanf(input, "%d-%d", start, end))) // N-M
 	{
-		printf("ERROR3\n");
+		fprintf(stderr, "%s: List must be numeric\n", PROGRAM);
+		exit(EXIT_FAILURE);
+	}
+	else // N
+	{
+		if(!(sscanf(input, "%d", start)))
+		{
+			fprintf(stderr, "%s: List must be numeric\n", PROGRAM);
+			exit(EXIT_FAILURE);
+		}
+		*end = *start;
 	}
 }
